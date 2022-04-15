@@ -1,1 +1,37 @@
+ CREATE TABLE Product(
+    pid VARCHAR(50),
+    name VARCHAR(50),
+    price FLOAT,
+    num_sold INT,
+    num_stock INT,
+    PRIMARY KEY (pid)
+);
 
+CREATE TABLE Customer(
+    cid VARCHAR(50),
+    firstname VARCHAR(50),
+    lastname VARCHAR(50),
+    phone INT(50),
+    age INT (10),
+    PRIMARY KEY (cid)
+);
+
+CREATE TABLE purchase (
+    quantity INT(50),
+    cid VARCHAR(50),
+    pid VARCHAR(50),
+    PRIMARY KEY (cid, pid),
+    FOREIGN KEY (cid) REFERENCES Customer(cid),
+    FOREIGN KEY (pid) REFERENCES Product(pid)
+);
+
+CREATE TABLE MemberAccount(
+    acc_id VARCHAR(50),
+    firstname VARCHAR(50),
+    lastname VARCHAR(50),
+    point FLOAT,
+    type VARCHAR(50),
+    cid VARCHAR(50) NOT NULL,
+    PRIMARY KEY (acc_id),
+    FOREIGN KEY(cid) REFERENCES Customer(cid)
+);
