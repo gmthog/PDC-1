@@ -4,7 +4,9 @@
     price FLOAT,
     num_sold INT,
     num_stock INT,
-    PRIMARY KEY (pid)
+    PRIMARY KEY (pid),
+    CHECK (num_sold >= 0),
+    CHECK ( num_stock >= 0)
 );
 
 CREATE TABLE Customer(
@@ -22,7 +24,8 @@ CREATE TABLE purchase (
     pid VARCHAR(50),
     PRIMARY KEY (cid, pid),
     FOREIGN KEY (cid) REFERENCES Customer(cid),
-    FOREIGN KEY (pid) REFERENCES Product(pid)
+    FOREIGN KEY (pid) REFERENCES Product(pid),
+    CHECK (quantity >= 0)
 );
 
 CREATE TABLE MemberAccount(
@@ -35,3 +38,38 @@ CREATE TABLE MemberAccount(
     PRIMARY KEY (acc_id),
     FOREIGN KEY(cid) REFERENCES Customer(cid)
 );
+
+CREATE TABLE Staff(
+    id         VARCHAR(10),
+    firstname  VARCHAR(20),
+    lastname   VARCHAR(20),
+    hphone     VARCHAR(20),
+    wphone     VARCHAR(20),
+    address    VARCHAR(100),
+    position   VARCHAR(50),
+    start_date DATE,
+    end_date   DATE,
+    salary     FLOAT,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Service(
+    sid VARCHAR(10),
+    name VARCHAR(50),
+    price FLOAT,
+    type VARCHAR(50),
+    PRIMARY KEY (sid)
+);
+
+CREATE TABLE Schedule(
+    bcode VARCHAR(50),
+    cus_id VARCHAR(50),
+    staff_id VARCHAR(50),
+    service_id VARCHAR(50),
+    time VARCHAR(50),
+    date DATE,
+    PRIMARY KEY(bcode),
+    FOREIGN KEY (cus_id) REFERENCES Customer(cid),
+    FOREIGN KEY (staff_id) REFERENCES Staff(id),
+    FOREIGN KEY (service_id) REFERENCES Service(sid)
+)
